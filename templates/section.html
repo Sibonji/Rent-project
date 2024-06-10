@@ -1,0 +1,13 @@
+<section class="row mb-5 p-3">
+ {% for post in posts %}
+<article class="col-md-4 p-3">   
+<a href="{{ url_for('post', post_id=post[1]) }}" class="card p-1">
+<img class="img-fluid card" alt="{{ post }}" src="https://postamat.ozon.ru/install/postamat.png">
+<div class="card-content p-3">
+<h3>Расположение: {{ post[0] }}</h3>
+<p>Количество ячеек для аренды: {{ post[2] }}</p>
+</div>
+</a>
+</article>
+{% endfor %}
+</section>

@@ -1,0 +1,17 @@
+<div class="element">
+    <p>Вход</p>
+    <form action="/log_res" method="POST">
+        <input type="text" name="name" id="name" placeholder="Имя" style="background-color:white" class="form-feild"><br>
+        <input type="text" name="pwd" id="pwd" placeholder="Пароль" style="background-color:white" class="form-feild"><br>
+        <button type="submit" class="add-btn">Войти</button>
+    </form>
+</div>
+<div class="element">
+    {% if err == 1 %}
+        <p color="red">Некорректные имя пользователя или пароль.</p>
+    {% endif %}
+</div>
+<div>
+    <p>Нет аккаунта?</p>
+    <a href="{{url_for('registration')}}">Регистрация.</a>
+</div>

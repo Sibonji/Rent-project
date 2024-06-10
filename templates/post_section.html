@@ -1,0 +1,21 @@
+<section class="row mb-5 p-3">
+ {% for post in posts %}
+<article class="col-md-4 p-3">   
+<a class="card p-1">
+<img class="img-fluid card" alt="{{ post }}" src="{{ post[4] }}">
+<div class="card-content p-3">
+<h3>{{ post[2] }}</h3>
+<!-- <a href=" {post[3]} ">Информация о товаре.</a> -->
+{% if post[1] == 0 %}
+    <p>Недоступно для аренды. Арендовано другим пользователем.</p>
+{% else %}
+    <!-- <a href=" {url_for('post', post_id=post[5], door_id=post[0]} ">Арендовать.</a> -->
+    <form action="/rent/{{ post[5] }}/{{ post[0] }}" method="POST">
+        <button type="submit" class="add-btn">Арендовать</button>
+    </form>
+{% endif %}
+</div>
+</a>
+</article>
+{% endfor %}
+</section>

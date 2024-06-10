@@ -1,0 +1,44 @@
+@import"https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap";@import url(https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap);html,body{background-color:#90b7e4;font-family:Grape Nuts,cursive}.dropdown-menu,.card{border-radius:10px;background-color:#ffffff}.nav-link,a:visited,a:hover,a:link{color:#000;text-decoration:none}h1{font-size:60px}h2{font-size:50px}h3{font-size:40px}.call{font-size:30px}.date,.nav{font-size:20px}.cute,li,.code,p{font-size:24px}.d{font-size:14px}.dotted{border-style:dotted}.dashed{border-style:dashed}
+
+.add-btn {
+    height: 40px;
+    width: 150px;
+    color: #FFFFFF;
+    background-color: #3888e2;
+    border: 1px solid #029902;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.element {
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.add-btn:hover {
+    color: #029902;
+    background-color: #00ff002f;
+    border: 1px solid #029902;
+    border-radius: 5px;
+}
+
+.add-btn:focus {
+    color: #029902;
+    background-color: #00ff002f;
+    border: 1px solid #029902;
+    border-radius: 5px;
+}
+
+.form-feild {
+    height: 40px;
+    width: 200px;
+    border: 1px solid #99AAB5;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #2C2F33;
+}
+

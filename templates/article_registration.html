@@ -1,0 +1,18 @@
+<div class="element">
+    <p>Вход</p>
+    <form action="/reg_res" method="POST">
+        <input type="text" name="name" id="name" placeholder="Имя" style="background-color:white" class="form-feild"><br>
+        <input type="text" name="pwd" id="pwd" placeholder="Пароль" style="background-color:white" class="form-feild"><br>
+        <input type="text" name="phone" id="phone" placeholder="Номер телефона" style="background-color:white" class="form-feild"><br>
+        <button type="submit" class="add-btn">Регистрация</button>
+    </form>
+</div>
+<div class="element">
+    {% if err == 1 %}
+        <p color="red">Некорректные имя пользователя, пароль или номер телефона</p>
+    {% endif %}
+</div>
+<div>
+    <p>Уже зарегистрированы?</p>
+    <a href="{{url_for('login')}}">Вход.</a>
+</div>
