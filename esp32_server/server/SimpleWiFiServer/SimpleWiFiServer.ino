@@ -2,8 +2,8 @@
 #include <WiFi.h>
 
 // Замените на свой идентификатор и пароль
-const char* ssid = "help me";
-const char* password = "2pidorazaebali";
+const char* ssid = "TESTNET";
+const char* password = "StudentPass50";
 
 // Номер порта для сервера
 WiFiServer server(80);
@@ -12,21 +12,18 @@ WiFiServer server(80);
 String header;
 
 // текущее состояние кнопки
-String output26State = "off";
+String output5State = "off";
 String output27State = "off";
-
 // Номера выводов
-const int output26 = 26;
+const int output5 = 5;
 const int output27 = 27;
 
 void setup() {
   Serial.begin(115200);
   // Настраиваем выводы платы
-  pinMode(output26, OUTPUT);
-  pinMode(output27, OUTPUT);
+  pinMode(output5, OUTPUT);
   // Переводим выводы в LOW
-  digitalWrite(output26, LOW);
-  digitalWrite(output27, LOW);
+  digitalWrite(output5, LOW);
 
   // Подключаемся к Wi-Fi
   Serial.print("Connecting to ");
@@ -66,14 +63,16 @@ void loop() {
             client.println();
 
             // Включаем или выключаем светодиоды
-            if (header.indexOf("GET /26/on") >= 0) {
-              Serial.println("GPIO 26 on");
-              output26State = "on"; //добавить проверку на то, что замок еще не открылся в цикле
-              digitalWrite(output26, HIGH);
-            } else if (header.indexOf("GET /26/off") >= 0) {
-              Serial.println("GPIO 26 off");
-              output26State = "off"; //дверь закрыта
-              digitalWrite(output26, LOW);
+            if (header.indexOf("GET /5/on") >= 0) {
+              Serial.println("GPIO 5 on");
+              output5State = "on"; //добавить проверку на то, что замок еще не открылся в цикле
+              digitalWrite(output5, HIGH);
+              delay(1400);
+              digitalWrite(output5, LOW);
+            } else if (header.indexOf("GET /5/off") >= 0) {
+              Serial.println("GPIO 5 off");
+              output5State = "off"; //дверь закрыта
+              
             } else if (header.indexOf("GET /27/on") >= 0) {
               Serial.println("GPIO 27 on");
               output27State = "on"; //добавить проверку на то, что замок еще не открылся в цикле
@@ -95,12 +94,12 @@ void loop() {
             client.println(".button2 {background-color:#555555;}</style></head>");
             client.println("<body><h1>ESP32 Web Server</h1>");
             // Выводим текущее состояние кнопок
-            client.println("<p>GPIO 26 - State " + output26State + "</p>");
-            // Если output26State сейчас off, то выводим надпись ON
-            if (output26State == "off") {
-              client.println("<p><a href=\"/26/on\"><button class=\"button\">ON</button></a></p>");
+            client.println("<p>GPIO 5 - State " + output5State + "</p>");
+            // Если output5State сейчас off, то выводим надпись ON
+            if (output5State == "off") {
+              client.println("<p><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
             // Аналогично для второй кнопки
             client.println("<p>GPIO 27 - State " + output27State + "</p>");
@@ -129,7 +128,7 @@ void loop() {
     Serial.println("");
   }
   // else {
-  //   if (output26State == "on") { //добавить проверку на то, что дверь закрылась
+  //   if (output5State == "on") { //добавить проверку на то, что дверь закрылась
   //     Serial.println("Door unlocked");
   //     client.println("HTTP/1.1 200 OK");
   //     client.println("Content-type:text/html");
@@ -148,10 +147,10 @@ void loop() {
   //     client.println(".button2 {background-color:#555555;}</style></head>");
   //     client.println("<body><h1>ESP32 Web Server</h1>");
   //     // Выводим текущее состояние кнопок
-  //     client.println("<p>GPIO 26 - State " + output26State + "</p>");
-  //     // Если output26State сейчас off, то выводим надпись ON
-  //     client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
-  //     output26State = "off";
+  //     client.println("<p>GPIO 5 - State " + output5State + "</p>");
+  //     // Если output5State сейчас off, то выводим надпись ON
+  //     client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
+  //     output5State = "off";
       
   //     // Аналогично для второй кнопки
   //     client.println("<p>GPIO 27 - State " + output27State + "</p>");
@@ -183,12 +182,12 @@ void loop() {
   //     client.println(".button2 {background-color:#555555;}</style></head>");
   //     client.println("<body><h1>ESP32 Web Server</h1>");
   //     // Выводим текущее состояние кнопок
-  //     client.println("<p>GPIO 26 - State " + output26State + "</p>");
-  //     // Если output26State сейчас off, то выводим надпись ON
-  //     if (output26State == "off") {
-  //       client.println("<p><a href=\"/26/on\"><button class=\"button\">ON</button></a></p>");
+  //     client.println("<p>GPIO 5 - State " + output5State + "</p>");
+  //     // Если output5State сейчас off, то выводим надпись ON
+  //     if (output5State == "off") {
+  //       client.println("<p><a href=\"/5/on\"><button class=\"button\">ON</button></a></p>");
   //     } else {
-  //       client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
+  //       client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
   //     }
   //     // Аналогично для второй кнопки
   //     client.println("<p>GPIO 27 - State " + output27State + "</p>");

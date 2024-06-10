@@ -4,6 +4,7 @@ import datetime
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from flask_login import LoginManager
 import hashlib
+import urllib.request
 
 PYTHONHASHSEED=0
 
@@ -15,6 +16,8 @@ content = [
         'title': 'Ozon Rent',
 		  }
 ]
+
+url = "http://192.168.50.243/"
 
 login_manager = LoginManager()
 
@@ -154,8 +157,37 @@ def door_res(post_id, door_id):
             cursor.close()
             connection.close()
 
+            print(url + str(door_id) + "/on")
+            
+            response = urllib.request.urlopen(url + str(door_id) + "/on")
+            print(response)
+
     return render_template('success.html')
     # Тут будет подключение к серверу и открытие двери
+
+@app.route('/return/<int:post_id>/<int:door_id>', methods=['GET', 'POST'])
+def item_ret(post_id, door_id):
+    connection = sq.connect('db/postamates.db')
+    cursor = connection.cursor()
+
+    request_db = '''
+    UPDATE door
+    SET item_status = 1, user_id = (?)
+    WHERE postamate_id = (?) AND door_id = (?)
+    '''
+    cursor.execute(request_db, [0, post_id, door_id])
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+    print(url + str(door_id) + "/on")
+            
+    response = urllib.request.urlopen(url + str(door_id) + "/on")
+    print(response)
+
+    return render_template('success_ret.html')
+
 
 @app.route('/login')
 def login():
@@ -190,7 +222,22 @@ def login_res():
             return render_template('login.html',
             err = 1
             )
-        return render_template('profile.html', name=username, number=res[0][3])
+        
+        connection = sq.connect('db/postamates.db')
+        cursor = connection.cursor()
+        
+        request_db = '''
+        SELECT item_name, item_link, item_img, door_id, postamate_id
+        FROM door
+        WHERE user_id = (?)
+        '''
+        cursor.execute(request_db, [res[0][2]])
+        items = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return render_template('profile.html', name=username, number=res[0][3], items=items)
 
 @app.route('/registration')
 def registration():
@@ -224,7 +271,22 @@ def registration_res():
         cursor.close()
         connection.close()
 
-        return render_template('profile.html', name=username, number=phone_number)
+        connection = sq.connect('db/postamates.db')
+        cursor = connection.cursor()
+        
+        request_db = '''
+        SELECT item_name, item_link, item_img
+        FROM door INNER JOIN user
+        USING (user_id)
+        WHERE nickname = (?) AND user_pwd_hash = (?)
+        '''
+        cursor.execute(request_db, [username, pwd_hash])
+        items = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return render_template('profile.html', name=username, number=phone_number, item=items)
 	
 if __name__ == '__main__':
     app.run(debug=True)

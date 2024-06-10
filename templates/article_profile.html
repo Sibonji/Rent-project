@@ -1,2 +1,17 @@
 <p>Ваше имя: {{name}}</p>
 <p>Номер телефона: {{number}}</p>
+<section class="row mb-5 p-3">
+{% for item in items %}
+<article class="col-md-4 p-3">   
+<a class="card p-1">
+<img class="img-fluid card" alt="{{ item }}" src="{{ item[2] }}">
+<div class="card-content p-3">
+<h3>{{ item[0] }}</h3>
+<form action="/return/{{item[4]}}/{{item[3]}}" method="POST">
+    <button type="submit" class="add-btn">Завершить аренду</button>
+</form>
+</div>
+</a>
+</article>
+{% endfor %}
+</section>

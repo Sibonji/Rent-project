@@ -1,5 +1,4 @@
 import sqlite3 as sq
-import psycopg2 as ps
 import random
 
 connection = sq.connect('postamates.db')
@@ -35,14 +34,14 @@ CREATE TABLE IF NOT EXISTS door (
 '''
 cursor.execute(door_tb)
 connection.commit()
-new_post = ["192.168.31.29", "Общежитие 14"]
+new_post = ["http://192.168.50.243/", "Общежитие 14"]
 post_insert = '''
 INSERT INTO postamate (postamate_ip, postamate_loc) VALUES (?, ?);
 '''
 cursor.execute(post_insert, new_post)
 connection.commit()
 
-new_door = [1, 26, 1, 0, "1000-0-0 00:00:00", "ESP32 DEVKIT V1", "https://wiki.amperka.ru/products:esp32-wroom-wifi-devkit-v1", "https://wiki.amperka.ru/_media/products:esp32-wroom-wifi-devkit-v1:esp32-wroom-wifi-devkit-v1.1.jpg"]
+new_door = [1, 5, 1, 0, "1000-0-0 00:00:00", "ESP32 DEVKIT V1", "https://wiki.amperka.ru/products:esp32-wroom-wifi-devkit-v1", "https://wiki.amperka.ru/_media/products:esp32-wroom-wifi-devkit-v1:esp32-wroom-wifi-devkit-v1.1.jpg"]
 door_insert = '''
 INSERT INTO door (postamate_id, door_id, item_status, user_id, taken_time, item_name, item_link, item_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 '''
