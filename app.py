@@ -52,8 +52,8 @@ def index():
     print(posts)
     return render_template('index.html', 
 	posts=posts,
-	title='Ozon Rent', 
-    description='Решение для аренды вещей, способных облегчить бытовую жизнь.',
+	title='Phystech Rent', 
+    description='Решение для удобной аренды вещей.',
     cover='https://www.python.org/static/opengraph-icon-200x200.png'
 	)
 
